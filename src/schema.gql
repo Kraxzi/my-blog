@@ -1,0 +1,125 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Blog {
+  description: String!
+  id: Int!
+  name: String!
+  posts: [BlogPost!]
+  user: User!
+  userId: Int!
+}
+
+type BlogPost {
+  blog: Blog!
+  blogId: Int!
+  content: String!
+  id: Int!
+  name: String!
+}
+
+input CreateBlogInput {
+  description: String!
+  name: String!
+}
+
+input CreateBlogPostInput {
+  blogId: Int!
+  content: String!
+  name: String!
+}
+
+input CreateUserInput {
+  password: String!
+  role: UserRole
+  username: String!
+}
+
+input FilterBlogPostInput {
+  name: String
+}
+
+type GetBlogPostsDto {
+  blogPosts: [BlogPost!]!
+  total: Int!
+}
+
+type GetBlogsDto {
+  blogs: [Blog!]!
+  total: Int!
+}
+
+type LoggedUserOutput {
+  access_token: String!
+}
+
+input LoginUserInput {
+  password: String!
+  username: String!
+}
+
+type Mutation {
+  createBlog(createBlogInput: CreateBlogInput!): Blog!
+  createPost(createBlogPostInput: CreateBlogPostInput!): BlogPost!
+  createUser(createUserInput: CreateUserInput!): User!
+  login(loginUserInput: LoginUserInput!): LoggedUserOutput!
+  removeBlog(id: Int!): Blog!
+  removePost(id: Int!): BlogPost!
+  removeUser(id: Int!): User!
+  updateBlog(updateBlogInput: UpdateBlogInput!): Blog!
+  updatePost(updateBlogPostInput: UpdateBlogPostInput!): BlogPost!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+}
+
+input PaginateBlogInput {
+  skip: Int! = 0
+  take: Int! = 10
+}
+
+input PaginateBlogPostInput {
+  skip: Int! = 0
+  take: Int! = 10
+}
+
+type Query {
+  blogs(paginateBlogInput: PaginateBlogInput!): GetBlogsDto!
+  findOne(username: String!): User
+  getBlog(id: Int!): Blog!
+  getBlogByUserId(id: Int!): Blog!
+  getPostById(id: Int!): BlogPost!
+  getPostsByBlog(filterBlogPostsInput: FilterBlogPostInput, id: Int!, paginateBlogPostsInput: PaginateBlogPostInput!, sortOrder: String = "ASC"): GetBlogPostsDto!
+}
+
+input UpdateBlogInput {
+  description: String
+  id: Int!
+  name: String
+}
+
+input UpdateBlogPostInput {
+  content: String
+  id: Int!
+  name: String
+}
+
+input UpdateUserInput {
+  id: Int!
+  password: String!
+  role: UserRole!
+  username: String!
+}
+
+type User {
+  blogs: [Blog!]
+  id: Int!
+  password: String!
+  role: UserRole
+  username: String!
+}
+
+"""user roles"""
+enum UserRole {
+  MODERATOR
+  WRITER
+}
